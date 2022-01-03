@@ -464,12 +464,12 @@ export default function App({ navigation }) {
           <Tab.Navigator screenOptions={{
             headerShown: false
           }}>
-            <Tab.Screen name="Home" component={HomeScreen} options={{
+            {/* <Tab.Screen name="Home" component={HomeScreen} options={{
               tabBarLabel: 'Home',
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="home" color={color} size={size} />
               ),
-            }} />
+            }} /> */}
             <Tab.Screen name="Posts" component={PostsScreen} options={{
               tabBarLabel: 'Posts',
               tabBarIcon: ({ color, size }) => (
