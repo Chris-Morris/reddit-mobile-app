@@ -1,0 +1,8 @@
++ react-native-vector-icons@9.0.0
+added 7 packages from 5 contributors, removed 404 packages, moved 1 package and audited 911 packages in 10.221s
+
+33 packages are looking for funding
+  run `npm fund` for details
+
+found 5 vulnerabilities (1 low, 4 moderate)
+  run `npm audit fix` to fix them, or `npm audit` for details

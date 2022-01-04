@@ -1,6 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
+import authContext from '../../context/authContext';
+const AuthContext = createContext(authContext);
 
 const SigninScreen = () => {
     const [username, setUsername] = useState('');

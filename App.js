@@ -11,10 +11,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Import Screens
-import HomeScreen from './screens/HomeScreen';
-import AccountScreen from './screens/AccountScreen';
-import PostListScreen from './screens/PostListScreen';
-import PostDetailScreen from './screens/PostDetailScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import AccountScreen from './src/screens/AccountScreen';
+import PostListScreen from './src/screens/PostListScreen';
+import PostDetailScreen from './src/screens/PostDetailScreen';
 // import SigninScreen from './screens/SigninScreen';
 // import SignupScreen from './screens/SignupScreen';
 
