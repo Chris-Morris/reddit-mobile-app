@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
-import React, { useState, useReducer, useEffect, useMemo, createContext, useContext } from 'react';
+import React, { useState, useReducer, useEffect, createContext, useContext } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -23,6 +22,7 @@ import PostDetailScreen from './screens/PostDetailScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 // Set up Auth Context
+import authContext from './context/authContext';
 const AuthContext = createContext({});
 
 // Set up Stack Navigator
@@ -84,16 +84,6 @@ export default function App({ navigation }) {
 
     bootstrapAsync();
   }, []);
-
-  const authContext = useMemo(() => ({
-    signIn: async data => {
-      dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-    },
-    signOut: () => dispatch({ type: 'SIGN_OUT' }),
-    signUp: async data => {
-      dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-    }
-  }), []);
 
   const SigninScreen = () => {
     const [username, setUsername] = useState('');

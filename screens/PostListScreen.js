@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Card } from 'react-native-elements';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const PostListScreen = () => {
@@ -21,6 +22,7 @@ const PostListScreen = () => {
         });
         setLoading(false);
         setPosts(response.data.data.children);
+        console.log(response.data.data.children)
     };
 
     const handleSearch = () => {
@@ -34,8 +36,17 @@ const PostListScreen = () => {
     const renderItem = ({ item }) => {
         if (item.data.thumbnail.includes('https')) {
             return (
-                <DropShadow key={item.data.id} style={styles.shadowProp} >
-                    <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PostDetail', { title: item.data.title, image: item.data.thumbnail })} >
+                <DropShadow key={item.data.id.toString()} style={styles.shadowProp} >
+                    <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PostDetail', {
+                        title: item.data.title,
+                        image: item.data.thumbnail,
+                        author: item.data.author,
+                        subreddit: item.data.subreddit,
+                        text: item.data.text,
+                        ups: item.data.ups,
+                        downs: item.data.downs,
+                        comments: item.data.num_comments
+                    })} >
                         <Text style={styles.title} >Title: {item.data.title}</Text>
                         <Card.Divider style={styles.divider} />
                         <Text style={styles.title} >Subreddit: {item.data.subreddit}</Text>
@@ -52,6 +63,9 @@ const PostListScreen = () => {
                             :
                             <Text>No image available</Text>
                         }
+                        <Text>Upvotes: {item.data.ups}</Text>
+                        <Text>Downvotes: {item.data.downs}</Text>
+                        <Text>Comments: {item.data.num_comments}</Text>
                     </TouchableOpacity>
                 </DropShadow>
             )
