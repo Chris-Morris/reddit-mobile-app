@@ -105,7 +105,7 @@ const SigninScreen = () => {
             {showButton ?
                 <TouchableOpacity style={signinStyle.button} onPress={() => signIn({ username, password })}><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
                 :
-                <TouchableOpacity style={signinStyle.inactiveButton} ><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
+                <TouchableOpacity style={signinStyle.inactiveButton} testID='button' ><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
             }
         </View >
     );
