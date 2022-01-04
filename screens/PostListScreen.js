@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, ActivityIndicator, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Card } from 'react-native-elements';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
@@ -36,9 +37,11 @@ const PostListScreen = () => {
                 <DropShadow key={item.data.id} style={styles.shadowProp} >
                     <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PostDetail', { title: item.data.title, image: item.data.thumbnail })} >
                         <Text style={styles.title} >Title: {item.data.title}</Text>
+                        <Card.Divider style={styles.divider} />
                         <Text style={styles.title} >Subreddit: {item.data.subreddit}</Text>
+                        <Card.Divider style={styles.divider} />
                         <Text style={styles.title} >Author: {item.data.author}</Text>
-                        <Text style={styles.title} >id: {item.data.id}</Text>
+                        <Card.Divider style={styles.divider} />
                         {item.data.thumbnail.includes('https')
                             ?
                             <Image
@@ -103,7 +106,7 @@ const PostListScreen = () => {
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                         ItemSeparatorComponent={renderSeparator}
-                        contentContainerStyle={{alignItems: 'center', marginTop: 20}}
+                        contentContainerStyle={{ alignItems: 'center', marginTop: 20 }}
                     />
                 </View>
             }
@@ -138,18 +141,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '90%',
+        minWidth: '90%',
         height: 'auto',
         padding: 10,
         margin: 10,
         borderRadius: 5
     },
     title: {
-        textTransform: 'uppercase'
+        // textTransform: 'uppercase'
+    },
+    divider: {
+        height: 1,
+        width: 200,
+        marginTop: 5
     },
     image: {
         height: 200,
-        width: 200
+        width: 200,
+        borderRadius: 5
     }
 });
 
