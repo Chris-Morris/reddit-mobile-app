@@ -1,30 +1,32 @@
-import React, { createContext } from 'react';
-import { render, cleanup } from '@testing-library/react-native';
-import '@testing-library/jest-dom';
+import React from 'react';
+import { render, cleanup, screen } from '@testing-library/react-native';
 
 import SigninScreen from '../SigninScreen';
-import authContext from '../../../context/authContext';
-
-const AuthContext = createContext();
 
 describe('Sign In Screen', () => {
     afterEach(cleanup);
+
+    // Mobile version
     test('renders username input', () => {
-        const screen = render(<SigninScreen />);
-        screen.debug();
-        const usernameInput = screen.getByPlaceholderText('Username');
-        expect(usernameInput).toBeInTheDocument;
+        // Render the Sign In screen
+        const { getByPlaceholderText } = render(<SigninScreen />);
+
+        // Extract the Username input
+        const username = getByPlaceholderText('Username');
+
+        // Assert the damn thing exists
+        expect(username).toBeInTheDocument();
     });
 
-    test('renders password input', () => {
-        const screen = render(<SigninScreen />);
-        const passwordInput = screen.getByPlaceholderText('Password');
-        expect(passwordInput).toBeInTheDocument;
-    });
+    // Desktop version
+    test('renders username input', () => {
+        // Render the Sign In screen
+        render(<SigninScreen />);
 
-    test('renders inactive sign in button until inputs are satisfied', () => {
-        const screen = render(<SigninScreen />);
-        const button = screen.getByTestId('button');
-        expect(button).toBeInTheDocument();
+        // Extract the Username input
+        const username = screen.getByPlaceholderText('Username');
+
+        // Assert the damn thing exists
+        expect(username).toBeInTheDocument();
     });
 });
