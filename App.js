@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
-import React, { useState, useReducer, useEffect, createContext, useContext } from 'react';
+import React, { useState, useReducer, useEffect, createContext, useContext, useMemo } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -32,8 +32,8 @@ const PostsStack = createNativeStackNavigator();
 function PostsScreen() {
   return (
     <PostsStack.Navigator>
-      <PostsStack.Screen name="PostList" component={PostListScreen} options={{headerShown: false}} />
-      <PostsStack.Screen name="PostDetail" component={PostDetailScreen} options={{headerBackTitleVisible: false, headerTitle: '', headerTransparent: true}} />
+      <PostsStack.Screen name="PostList" component={PostListScreen} options={{ headerShown: false }} />
+      <PostsStack.Screen name="PostDetail" component={PostDetailScreen} options={{ headerBackTitleVisible: false, headerTitle: '', headerTransparent: true }} />
     </PostsStack.Navigator>
   );
 }
@@ -84,6 +84,16 @@ export default function App({ navigation }) {
 
     bootstrapAsync();
   }, []);
+
+  const authContext = useMemo(() => ({
+    signIn: async data => {
+      dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+    },
+    signOut: () => dispatch({ type: 'SIGN_OUT' }),
+    signUp: async data => {
+      dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+    }
+  }), []);
 
   const SigninScreen = () => {
     const [username, setUsername] = useState('');

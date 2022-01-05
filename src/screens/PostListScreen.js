@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const PostListScreen = () => {
     const [posts, setPosts] = useState([]);
-    const [search, setSearch] = useState('new');
+    const [search, setSearch] = useState('javascript');
     const [loading, setLoading] = useState(false);
     const nav = useNavigation();
 
