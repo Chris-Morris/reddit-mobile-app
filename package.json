@@ -22,6 +22,7 @@
     "expo-status-bar": "~1.2.0",
     "immutability-helper": "^3.1.1",
     "jest": "^27.4.5",
+    "jest-expo": "^44.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
@@ -35,16 +36,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
-    "@testing-library/jest-native": "^4.0.4",
     "@testing-library/react-native": "^9.0.0",
-    "jest-expo": "^35.0.0",
     "react-test-renderer": "^17.0.1"
   },
   "jest": {
-    "preset": "jest-expo/universal",
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
-    ],
+    "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ]
