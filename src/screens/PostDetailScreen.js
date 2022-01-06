@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ThumbIcon from '../components/ThumbIcon';
 
 const PostDetailScreen = ({ route }) => {
     const { title, image, author, subreddit, ups, downs, comments } = route.params;
@@ -28,9 +29,8 @@ const PostDetailScreen = ({ route }) => {
                         source={{ uri: image }}
                     />
                     <View style={styles.stats} >
-                    <Ionicons name="thumbs-up" color={styles.iconColor} size={styles.iconSize} ><Text> {ups}</Text></Ionicons>
-                    <Ionicons name="thumbs-down" color={styles.iconColor} size={styles.iconSize} ><Text> {downs}</Text></Ionicons>
-                    <Ionicons name="chatbubbles" color={styles.iconColor} size={styles.iconSize} ><Text> {comments}</Text></Ionicons>
+                        <ThumbIcon ups={ups} /><Text> {ups}</Text>
+                        <Icon name="comments" color={styles.iconColor} size={20} /><Text> {comments}</Text>
                     </View>
                 </ScrollView>
             </DropShadow>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         color: 'rgb(55, 55, 55)'
     },
     iconSize: {
-        fontSize: 20
+        fontSize: 5
     }
 });
 

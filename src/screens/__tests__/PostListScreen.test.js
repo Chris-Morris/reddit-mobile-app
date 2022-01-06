@@ -26,9 +26,7 @@ describe('Post List Screen', () => {
                 {PostsScreen()}
             </AuthContext.Provider>
         );
-        setTimeout(() => {
-            screen.debug();
-        }, 5000);
+        screen.debug();
     });
 });
 

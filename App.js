@@ -4,6 +4,7 @@ import React, { useState, useReducer, useEffect, createContext, useContext, useM
 import * as SecureStore from 'expo-secure-store';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Import Navigation libs
 import { NavigationContainer } from '@react-navigation/native';

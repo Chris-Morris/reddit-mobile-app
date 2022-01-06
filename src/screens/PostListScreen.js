@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { Card } from 'react-native-elements';
 import DropShadow from "react-native-drop-shadow";
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import ThumbIcon from '../components/ThumbIcon';
 
-const PostListScreen = () => {
+const PostListScreen = ({ route, navigation }) => {
     const [posts, setPosts] = useState([]);
     const [search, setSearch] = useState('javascript');
     const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const PostListScreen = () => {
         });
         setLoading(false);
         setPosts(response.data.data.children);
-        console.log(response.data.data.children)
+        console.log(response.data.data.children);
     };
 
     const handleSearch = () => {
@@ -33,10 +34,10 @@ const PostListScreen = () => {
         fetchPosts();
     }, []);
 
-    const renderItem = ({ item }) => {
-        if (item.data.thumbnail.includes('https')) {
+    const renderItem = ({ item, index }) => {
+        if (item.data.thumbnail.includes('https') && !item.data.over_18) {
             return (
-                <DropShadow key={item.data.id.toString()} style={styles.shadowProp} >
+                <DropShadow key={index} style={styles.shadowProp} >
                     <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PostDetail', {
                         title: item.data.title,
                         image: item.data.thumbnail,
@@ -63,9 +64,10 @@ const PostListScreen = () => {
                             :
                             <Text>No image available</Text>
                         }
-                        <Text>Upvotes: {item.data.ups}</Text>
-                        <Text>Downvotes: {item.data.downs}</Text>
-                        <Text>Comments: {item.data.num_comments}</Text>
+                        <View style={styles.statsContainer} >
+                            <Text><ThumbIcon ups={item.data.ups} /> {item.data.ups}</Text>
+                            <Text><Icon name="comments" size={20} color="#404040" /> {item.data.num_comments}</Text>
+                        </View>
                     </TouchableOpacity>
                 </DropShadow>
             )
@@ -117,8 +119,8 @@ const PostListScreen = () => {
                         textStyle={{ color: '#000' }}
                     /><FlatList
                         data={posts}
+                        keyExtractor={item => item.data.id}
                         renderItem={renderItem}
-                        keyExtractor={item => item.id}
                         ItemSeparatorComponent={renderSeparator}
                         contentContainerStyle={{ alignItems: 'center', marginTop: 20 }}
                     />
@@ -173,6 +175,13 @@ const styles = StyleSheet.create({
         height: 200,
         width: 200,
         borderRadius: 5
+    },
+    statsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        width: 200,
+        marginTop: 10
     }
 });
 
