@@ -2,14 +2,14 @@ import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react-native';
 import { Alert } from 'react-native';
 
-import SigninScreen from '../SigninScreen';
+import SignupScreen from '../SignupScreen';
 
 describe('Sign In Screen', () => {
 
     let screen;
 
     beforeEach(() => {
-        screen = render(<SigninScreen />);
+        screen = render(<SignupScreen />);
     });
 
     afterEach(cleanup);

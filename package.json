@@ -8,7 +8,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "testSignin": "jest SigninScreen.test.js --watchAll",
+    "testSignup": "jest SignupScreen.test.js --watchAll"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.0.9",
