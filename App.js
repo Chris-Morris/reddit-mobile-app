@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import React, { useState, useReducer, useEffect, createContext, useContext, useMemo } from 'react';
 import * as SecureStore from 'expo-secure-store';
@@ -133,8 +133,17 @@ export default function App({ navigation }) {
       };
     }, [username, password]);
 
+    const signinError = () =>
+      Alert.alert(
+        "Sign In Error",
+        "Please enter required details",
+        [
+          { text: "OK" }
+        ]
+      );
+
     return (
-      <View style={signinStyle.container} >
+      <ScrollView contentContainerStyle={signinStyle.container} >
         <LinearGradient
           // Background Linear Gradient
           colors={['rgba(0,0,0,0.8)', 'transparent']}
@@ -185,6 +194,7 @@ export default function App({ navigation }) {
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
+                  secureTextEntry
                 />
               </View>
               :
@@ -198,26 +208,28 @@ export default function App({ navigation }) {
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
+                  secureTextEntry
                 />
               </View>
             }
             {showButton ?
               <TouchableOpacity style={signinStyle.button} onPress={() => signIn({ username, password })}><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
               :
-              <TouchableOpacity style={signinStyle.inactiveButton} ><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
+              <TouchableOpacity style={signinStyle.inactiveButton} onPress={signinError} ><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
             }
           </Card>
         </DropShadow>
-      </View>
+      </ScrollView>
     );
   }
 
   const signinStyle = {
     container: {
-      flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       backgroundColor: 'blue',
+      height: 600,
+      paddingTop: 100
     },
     background: {
       position: 'absolute',
@@ -282,6 +294,10 @@ export default function App({ navigation }) {
   }
 
   const SignupScreen = () => {
+    const [firstname, setFirstname] = useState('');
+    const [invalidFirstname, setInvalidFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [invalidLastname, setInvalidLastname] = useState('');
     const [username, setUsername] = useState('');
     const [invalidUsername, setInvalidUsername] = useState(false);
     const [password, setPassword] = useState('');
@@ -291,6 +307,26 @@ export default function App({ navigation }) {
     const { signIn } = useContext(AuthContext);
 
     useEffect(() => {
+      if (firstname.length < 2) {
+        setInvalidFirstname(true);
+      } else {
+        setInvalidFirstname(false);
+      };
+
+      if (firstname.length === 0) {
+        setInvalidFirstname(false);
+      };
+
+      if (lastname.length < 2) {
+        setInvalidLastname(true);
+      } else {
+        setInvalidLastname(false);
+      };
+
+      if (lastname.length === 0) {
+        setInvalidLastname(false);
+      };
+
       if (username.length < 5) {
         setInvalidUsername(true);
       } else {
@@ -311,63 +347,73 @@ export default function App({ navigation }) {
         setInvalidPassword(false);
       };
 
-      if (username.length >= 5 && password.length >= 5) {
+      if (firstname.length >= 2 && lastname.length >= 2 && username.length >= 5 && password.length >= 5) {
+        setInvalidFirstname(false);
+        setInvalidLastname(false);
         setInvalidUsername(false);
         setInvalidPassword(false);
         setShowButton(true);
+      } else {
+        setShowButton(false);
       };
-    }, [username, password]);
+    }, [firstname, lastname, username, password]);
+
+    const signupError = () =>
+      Alert.alert(
+        "Sign Up Error",
+        "Please enter required details",
+        [
+          { text: "OK" }
+        ]
+      );
 
     return (
-      <View style={signinStyle.container} >
+      <ScrollView contentContainerStyle={signupStyle.container} >
         <LinearGradient
           // Background Linear Gradient
           colors={['rgba(0,0,0,0.8)', 'transparent']}
-          style={signinStyle.background}
+          style={signupStyle.background}
         />
-        <DropShadow style={signinStyle.shadowProps} >
-          <Card containerStyle={signinStyle.card}>
-            <Card.Title>Sign In</Card.Title>
+        <DropShadow style={signupStyle.shadowProps} >
+          <Card containerStyle={signupStyle.card}>
+            <Card.Title>Sign Up</Card.Title>
             <Card.Divider />
-            {!invalidUsername ?
-              <View>
-                <Text>Please enter your username</Text>
-                <Text>(min 5 characters)</Text>
-                <TextInput
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  clearButtonMode='always'
-                  style={signinStyle.input}
-                  placeholder="Username"
-                  value={username}
-                  onChangeText={setUsername}
-                />
-              </View>
-              :
-              <View>
-                <Text>Please enter a valid username</Text>
-                <Text>(min 5 characters)</Text>
-                <TextInput
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  clearButtonMode='always'
-                  style={signinStyle.invalidInput}
-                  placeholder="Username"
-                  value={username}
-                  onChangeText={setUsername}
-                />
-              </View>
-            }
+            <View>
+              <Text>First name</Text>
+              <TextInput
+                autoCapitalize='sentences'
+                autoCorrect={false}
+                clearButtonMode='always'
+                style={signupStyle.input}
+                placeholder="First Name"
+                value={firstname}
+                onChangeText={setFirstname}
+              />
+            </View>
+
+            <View>
+              <Text>Last name</Text>
+              <TextInput
+                autoCapitalize='sentences'
+                autoCorrect={false}
+                clearButtonMode='always'
+                style={signupStyle.input}
+                placeholder="Last Name"
+                value={lastname}
+                onChangeText={setLastname}
+                secureTextEntry
+              />
+            </View>
 
             {!invalidUsername ?
               <View>
-                <Text>Please enter your username</Text>
+                <Text>Username</Text>
                 <Text>(min 5 characters)</Text>
                 <TextInput
                   autoCapitalize='none'
                   autoCorrect={false}
                   clearButtonMode='always'
-                  style={signinStyle.input}
+                  style={signupStyle.input}
                   placeholder="Username"
                   value={username}
                   onChangeText={setUsername}
@@ -375,43 +421,13 @@ export default function App({ navigation }) {
               </View>
               :
               <View>
-                <Text>Please enter a valid username</Text>
+                <Text>Username</Text>
                 <Text>(min 5 characters)</Text>
                 <TextInput
                   autoCapitalize='none'
                   autoCorrect={false}
                   clearButtonMode='always'
-                  style={signinStyle.invalidInput}
-                  placeholder="Username"
-                  value={username}
-                  onChangeText={setUsername}
-                />
-              </View>
-            }
-
-            {!invalidUsername ?
-              <View>
-                <Text>Please enter your username</Text>
-                <Text>(min 5 characters)</Text>
-                <TextInput
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  clearButtonMode='always'
-                  style={signinStyle.input}
-                  placeholder="Username"
-                  value={username}
-                  onChangeText={setUsername}
-                />
-              </View>
-              :
-              <View>
-                <Text>Please enter a valid username</Text>
-                <Text>(min 5 characters)</Text>
-                <TextInput
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  clearButtonMode='always'
-                  style={signinStyle.invalidInput}
+                  style={signupStyle.invalidInput}
                   placeholder="Username"
                   value={username}
                   onChangeText={setUsername}
@@ -421,12 +437,12 @@ export default function App({ navigation }) {
 
             {invalidPassword ?
               <View>
-                <Text>Please enter a valid password</Text>
+                <Text>Password</Text>
                 <TextInput
                   autoCapitalize='none'
                   autoCorrect={false}
                   clearButtonMode='always'
-                  style={signinStyle.invalidInput}
+                  style={signupStyle.invalidInput}
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
@@ -434,12 +450,12 @@ export default function App({ navigation }) {
               </View>
               :
               <View>
-                <Text>Please enter your password</Text>
+                <Text>Password</Text>
                 <TextInput
                   autoCapitalize='none'
                   autoCorrect={false}
                   clearButtonMode='always'
-                  style={signinStyle.input}
+                  style={signupStyle.input}
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
@@ -448,15 +464,85 @@ export default function App({ navigation }) {
             }
 
             {showButton ?
-              <TouchableOpacity style={signinStyle.button} onPress={() => signIn({ username, password })}><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
+              <TouchableOpacity style={signupStyle.button} onPress={() => signIn({ username, password })}><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
               :
-              <TouchableOpacity style={signinStyle.inactiveButton} ><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
+              <TouchableOpacity style={signupStyle.inactiveButton} onPress={signupError} ><Text style={{ color: 'white' }} >Sign In</Text></TouchableOpacity>
             }
           </Card>
         </DropShadow>
-      </View>
+      </ScrollView>
     );
   }
+
+  const signupStyle = {
+    container: {
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor: 'blue',
+      height: 600,
+      paddingTop: 40
+    },
+    background: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      height: 400,
+    },
+    card: {
+      height: 400,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderRadius: 5
+    },
+    shadowProps: {
+      shadowColor: '#171717',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.4,
+      shadowRadius: 2
+    },
+    input: {
+      height: 30,
+      width: 200,
+      backgroundColor: 'rgb(236, 240, 246)',
+      borderStyle: 'solid',
+      borderColor: 'rgb(0, 122, 204)',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingLeft: 10,
+      marginBottom: 10
+    },
+    invalidInput: {
+      height: 30,
+      width: 200,
+      backgroundColor: 'rgb(236, 240, 246)',
+      borderStyle: 'solid',
+      borderColor: 'rgb(255, 2, 2)',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingLeft: 10,
+      marginBottom: 10
+    },
+    button: {
+      backgroundColor: 'rgb(0, 122, 204)',
+      height: 30,
+      width: 124,
+      borderRadius: 5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 35
+    },
+    inactiveButton: {
+      backgroundColor: 'rgb(51, 51, 51)',
+      height: 30,
+      width: 124,
+      borderRadius: 5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 35
+    }
+  };
 
   return (
     <AuthContext.Provider value={authContext}>

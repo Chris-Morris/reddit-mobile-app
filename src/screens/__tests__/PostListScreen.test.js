@@ -26,7 +26,7 @@ describe('Post List Screen', () => {
                 {PostsScreen()}
             </AuthContext.Provider>
         );
-        screen.debug();
+        // screen.debug();
     });
 });
 

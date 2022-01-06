@@ -10,7 +10,7 @@ const PostDetailScreen = ({ route }) => {
     const { title, image, author, subreddit, ups, downs, comments } = route.params;
 
     return (
-        <View style={styles.container} >
+        <ScrollView contentContainerStyle={styles.container} >
             <LinearGradient
                 // Background Linear Gradient
                 colors={['rgba(0,0,0,0.8)', 'transparent']}
@@ -28,19 +28,19 @@ const PostDetailScreen = ({ route }) => {
                         style={styles.image}
                         source={{ uri: image }}
                     />
-                    <View style={styles.stats} >
-                        <ThumbIcon ups={ups} /><Text> {ups}</Text>
-                        <Icon name="comments" color={styles.iconColor} size={20} /><Text> {comments}</Text>
+                    <View style={styles.statsContainer} >
+                        <Text><ThumbIcon ups={ups} /> {ups}</Text>
+                        <Text><Icon name="comments" color={styles.iconColor} size={20} /> {comments}</Text>
                     </View>
                 </ScrollView>
             </DropShadow>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        minHeight: 600,
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -87,9 +87,12 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 5
     },
-    stats: {
+    statsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        width: 250,
+        marginTop: 10
     },
     iconColor: {
         color: 'rgb(55, 55, 55)'
