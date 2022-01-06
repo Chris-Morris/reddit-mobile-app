@@ -23,7 +23,6 @@ const PostListScreen = ({ route, navigation }) => {
         });
         setLoading(false);
         setPosts(response.data.data.children);
-        console.log(response.data.data.children);
     };
 
     const handleSearch = () => {

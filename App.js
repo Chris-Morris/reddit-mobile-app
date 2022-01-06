@@ -474,13 +474,13 @@ export default function App({ navigation }) {
             <Tab.Screen name="Posts" component={PostsScreen} options={{
               tabBarLabel: 'Posts',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="list" color={color} size={size} />
+                <Icon name="list" color={color} size={size} />
               ),
             }} />
             <Tab.Screen name="Settings" component={AccountScreen} options={{
-              tabBarLabel: 'Settings',
+              tabBarLabel: 'Account',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="settings" color={color} size={size} />
+                <Icon name="user-circle" color={color} size={size} />
               ),
             }} />
           </Tab.Navigator>
@@ -491,13 +491,13 @@ export default function App({ navigation }) {
             <Tab.Screen name="Sign In" component={SigninScreen} options={{
               tabBarLabel: 'Sign In',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="finger-print" color={color} size={size} />
+                <Icon name="key" color={color} size={size} />
               ),
             }} />
             <Tab.Screen name="Sign Up" component={SignupScreen} options={{
               tabBarLabel: 'Sign Up',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="log-in" color={color} size={size} />
+                <Icon name="sign-in" color={color} size={size} />
               ),
             }} />
           </Tab.Navigator>
