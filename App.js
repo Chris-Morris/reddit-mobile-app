@@ -19,9 +19,6 @@ import PostDetailScreen from './src/screens/PostDetailScreen';
 // import SigninScreen from './screens/SigninScreen';
 // import SignupScreen from './screens/SignupScreen';
 
-// Import Icons
-import { Ionicons } from '@expo/vector-icons';
-
 // Set up Auth Context
 import authContext from './context/authContext';
 const AuthContext = createContext({});

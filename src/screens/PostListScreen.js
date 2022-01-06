@@ -37,7 +37,7 @@ const PostListScreen = ({ route, navigation }) => {
         if (item.data.thumbnail.includes('https') && !item.data.over_18) {
             return (
                 <DropShadow key={index} style={styles.shadowProp} >
-                    <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PostDetail', {
+                    <TouchableOpacity style={styles.card} onPressOut={() => nav.navigate('PostDetail', {
                         title: item.data.title,
                         image: item.data.thumbnail,
                         author: item.data.author,
